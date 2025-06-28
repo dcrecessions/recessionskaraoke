@@ -25,41 +25,7 @@ export default function GenerateQRPage() {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [qrDetails, setQRDetails] = useState({
-    victimName: "",
-    victimSurname: "",
-    victimEmail: "",
-    victimHeight: "",
-    victimWeight: "",
-    victimAge: "",
-    victimProfession: "",
-    victimNationality: "",
-    victimTelNumber: "",
-    victimHouseNumber: "",
-    victimAddress: "",
-    victimCity: "",
-    victimCountry: "",
-    relative1Name: "",
-    relative1Surname: "",
-    relative1Address: "",
-    relative1Phone: "",
-    relative1Email: "",
-    relative2Name: "",
-    relative2Surname: "",
-    relative2Address: "",
-    relative2Phone: "",
-    relative2Email: "",
-    relative3Name: "",
-    relative3Surname: "",
-    relative3Address: "",
-    relative3Phone: "",
-    relative3Email: "",
-    bloodGroup: "",
-    onDrugs: false,
-    drugsName: "",
-    doctorPhoneNumber: "",
-    sickness: "",
-    medication: "",
-    hospitalName: "",
+    qrCodeData: "",
     qrStatus: "",
   });
 
@@ -79,42 +45,8 @@ export default function GenerateQRPage() {
         .then((response) => {
           const data = response.data;
           setQRDetails({
-            victimName: data.victimName || "",
-            victimSurname: data.victimSurname || "",
-            victimEmail: data.victimEmail || "",
-            victimHeight: data.victimHeight || null,
-            victimWeight: data.victimWeight || null,
-            victimAge: data.victimAge || null,
-            victimProfession: data.victimProfession || "",
-            victimNationality: data.victimNationality || "",
-            victimTelNumber: data.victimTelNumber || "",
-            victimHouseNumber: data.victimHouseNumber || "",
-            victimAddress: data.victimAddress || "",
-            victimCity: data.victimCity || "",
-            victimCountry: data.victimCountry || "",
-            relative1Name: data.relative1Name || "",
-            relative1Surname: data.relative1Surname || "",
-            relative1Address: data.relative1Address || "",
-            relative1Phone: data.relative1Phone || "",
-            relative1Email: data.relative1Email || "",
-            relative2Name: data.relative2Name || "",
-            relative2Surname: data.relative2Surname || "",
-            relative2Address: data.relative2Address || "",
-            relative2Phone: data.relative2Phone || "",
-            relative2Email: data.relative2Email || "",
-            relative3Name: data.relative3Name || "",
-            relative3Surname: data.relative3Surname || "",
-            relative3Address: data.relative3Address || "",
-            relative3Phone: data.relative3Phone || "",
-            relative3Email: data.relative3Email || "",
-            bloodGroup: data.bloodGroup || "",
-            onDrugs: data.onDrugs || false,
-            drugsName: data.drugsName || "",
-            doctorPhoneNumber: data.doctorPhoneNumber || "",
-            sickness: data.sickness || "",
-            medication: data.medication || "",
-            hospitalName: data.hospitalName || "",
-            qrStatus: data.status || "PENDING",
+            qrCodeData: data.qrCodeData || "",
+            qrStatus: data.status || "UPDATED",
           });
         })
         .catch((error) => {
@@ -144,12 +76,12 @@ export default function GenerateQRPage() {
 
       const url = isEditing
         ? `/api/qr/update-qr?qrId=${qrId}` // Update API if editing
-        : "/api/qr/request-approval"; // New QR creation API
+        : "/api/qr/generate-qr"; // New QR creation API
 
       const requestData = {
         ...qrDetails,
         userId,
-        reqStatus: isEditing ? "PENDING" : "NEW", // Different status depending on edit or new
+        reqStatus: isEditing ? "UPDATED" : "NEW", // Different status depending on edit or new
       };
 
       // Submit the form data
@@ -159,10 +91,10 @@ export default function GenerateQRPage() {
       toast.success(isEditing ? "Success" : "Created", {
         description: isEditing
           ? "QR code updated successfully!"
-          : "QR code creation request submitted successfully! Awaiting approval.",
+          : "QR code created successfully!",
       });
 
-      router.push("/dashboard"); // Redirect after success
+      router.push("/admin/qr-management"); // Redirect after success
     } catch (error) {
       console.log(
         `error ${isEditing ? "updating" : "creating"} QR code: ${error}`
@@ -183,36 +115,24 @@ export default function GenerateQRPage() {
             {loading
               ? "Processing"
               : isEditing
-              ? "Edit Qr Code"
-              : "Generate Qr Code"}
+              ? "Edit QR Code"
+              : "Generate QR Code"}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <form>
             <div className="grid w-full gap-4">
-              {/* Victim Details */}
+              {/* QR Code Data */}
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="victimName">Victim Name</Label>
+                <Label htmlFor="qrCodeData">QR Code Data</Label>
                 <Input
-                  id="victimName"
+                  id="qrCodeData"
                   type="text"
-                  value={qrDetails.victimName}
+                  value={qrDetails.qrCodeData}
                   onChange={(e) =>
-                    handleInputChange("victimName", e.target.value)
+                    handleInputChange("qrCodeData", e.target.value)
                   }
-                  placeholder="Victim Name"
-                />
-              </div>
-              <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="victimSurname">Victim Surname</Label>
-                <Input
-                  id="victimSurname"
-                  type="text"
-                  value={qrDetails.victimSurname}
-                  onChange={(e) =>
-                    handleInputChange("victimSurname", e.target.value)
-                  }
-                  placeholder="Victim Surname"
+                  placeholder="Enter QR Code Data"
                 />
               </div>
             </div>
@@ -230,7 +150,7 @@ export default function GenerateQRPage() {
           </Button>
           <Button
             variant="outline"
-            onClick={() => router.push("/dashboard")}
+            onClick={() => router.push("/admin/qr-management")}
             className="w-full sm:w-auto ml-2"
           >
             Cancel

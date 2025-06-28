@@ -5,7 +5,7 @@ import {
   LayoutDashboard,
   QrCode,
   LayoutPanelLeft,
-  Search,
+  ListTodo,
   Scan,
   UserPlus,
   Headset,
@@ -45,11 +45,11 @@ export function AppSidebar() {
       url: "/generateQR",
       icon: QrCode,
     },
-    {
-      title: "Scanner",
-      url: "/qr-scanner",
-      icon: Scan,
-    },
+    // {
+    //   title: "Scanner",
+    //   url: "/qr-scanner",
+    //   icon: Scan,
+    // },
   ];
 
   // Admin-specific items.
@@ -68,6 +68,11 @@ export function AppSidebar() {
       title: "User Management",
       url: "/admin/user-management",
       icon: UserPlus,
+    },
+    {
+      title: "QR Management",
+      url: "/admin/qr-management",
+      icon: ListTodo,
     },
   ];
 

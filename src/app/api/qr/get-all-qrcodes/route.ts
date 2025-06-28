@@ -1,31 +1,24 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
+import prisma from "@/lib/prisma";
 
-export const dynamic = "force-dynamic"; // Forces the route to be dynamic and prevents caching
-
-export async function GET() {
-  try {
-    // Get session to get the userId of the logged-in user
-    const session = await getServerSession(authOptions);
-
-    // If the session does not exist or the user is not logged in
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Use the userId from the session to filter QR codes
-    const qrCodes = await prisma.qRCode.findMany({
-      where: {
-        userId: session.user.id, // Filter based on the logged-in userId
-      },
-      orderBy: { createdAt: "desc" },
-    });
-
-    return NextResponse.json(qrCodes);
-  } catch (error: any) {
-    console.error("Error fetching QR codes:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+export async function GET(request: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session || session.user.role !== "ADMIN") {
+    return NextResponse.json({ error: "Admins only" }, { status: 403 });
   }
+
+  const data = await prisma.qRCode.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      qrCodeUrl: true,
+      qrCodeData: true,
+      status: true,
+      createdAt: true,
+    },
+  });
+
+  return NextResponse.json({ data });
 }

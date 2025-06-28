@@ -1,0 +1,16 @@
+-- CreateEnum
+CREATE TYPE "QRStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
+
+-- CreateTable
+CREATE TABLE "QRCode" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "status" "QRStatus" NOT NULL DEFAULT 'PENDING',
+    "qrCodeUrl" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "QRCode_pkey" PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "QRCode" ADD CONSTRAINT "QRCode_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

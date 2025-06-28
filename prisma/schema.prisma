@@ -19,6 +19,7 @@ model User {
   emailVerificationTokens EmailVerificationToken[] // Reverse relation for EmailVerificationToken
   createdAt      DateTime @default(now())
   actionedRequests SongRequest[] @relation("RequestStatusByUser")
+  qrCode         QRCode[]
 }
 
 model SongRequest {
@@ -44,6 +45,16 @@ model EmailVerificationToken {
   createdAt  DateTime @default(now())
 }
 
+model QRCode {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  status         QRStatus @default(NEW)
+  qrCodeUrl      String?
+  qrCodeData     String
+  createdAt      DateTime @default(now())
+}
+
 model SpotifyToken {
   id        Int      @id @default(autoincrement())
   token     String
@@ -62,4 +73,9 @@ enum RequestStatus {
 enum Role {
   USER
   ADMIN
+}
+
+enum QRStatus {
+  UPDATED
+  NEW
 }
