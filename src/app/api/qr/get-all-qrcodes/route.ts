@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
 export const dynamic = "force-dynamic"; // Forces the route to be dynamic and prevents caching
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Get session to get the userId of the logged-in user
     const session = await getServerSession(authOptions);

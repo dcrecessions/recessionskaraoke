@@ -1,4 +1,3 @@
-import React, { Suspense } from "react";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {

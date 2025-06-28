@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import QRCode from "qrcode";
-import cloudinary from "@/utils/cloudinary"; // Assuming Cloudinary utility is correctly set up
 
 export const dynamic = "force-dynamic"; // Forces the route to be dynamic and prevents caching
 

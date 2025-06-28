@@ -25,19 +25,7 @@ import {
   SidebarMenuItem,
   SidebarFooter,
   SidebarHeader,
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { Separator } from "@/components/ui/separator";
 import { NavUser } from "@/components/nav-user";
 import { toast } from "sonner";
 
@@ -105,8 +93,6 @@ export function AppSidebar() {
     }
   };
 
-  const DocorADMINisAllowed =
-    session?.user?.role === "ADMIN" || session?.user?.role === "DOC";
   const USERorADMINisAllowed =
     session?.user?.role === "ADMIN" || session?.user?.role === "USER";
 

@@ -260,32 +260,38 @@ export default function ViewAllSongsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {records.map((r) => (
-                <TableRow key={r.id}>
-                  <TableCell>
-                    <input
-                      type="checkbox"
-                      checked={selected.includes(r.id)}
-                      onChange={() => toggleSelect(r.id)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {new Date(r.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(r.createdAt).toLocaleTimeString()}
-                  </TableCell>
-                  <TableCell>{r.song}</TableCell>
-                  <TableCell>{r.name}</TableCell>
-                  <TableCell>{r.status}</TableCell>
-                  <TableCell>{r.statusBy?.name || "-"}</TableCell>
-                  <TableCell>
-                    {r.statusChanged
-                      ? new Date(r.statusChanged).toLocaleString()
-                      : "-"}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {loading ? (
+                <div className="w-full text-center py-10 text-gray-500">
+                  Loading…
+                </div>
+              ) : (
+                records.map((r) => (
+                  <TableRow key={r.id}>
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={selected.includes(r.id)}
+                        onChange={() => toggleSelect(r.id)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {new Date(r.createdAt).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>
+                      {new Date(r.createdAt).toLocaleTimeString()}
+                    </TableCell>
+                    <TableCell>{r.song}</TableCell>
+                    <TableCell>{r.name}</TableCell>
+                    <TableCell>{r.status}</TableCell>
+                    <TableCell>{r.statusBy?.name || "-"}</TableCell>
+                    <TableCell>
+                      {r.statusChanged
+                        ? new Date(r.statusChanged).toLocaleString()
+                        : "-"}
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
 

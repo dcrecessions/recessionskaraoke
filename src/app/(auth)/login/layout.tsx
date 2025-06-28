@@ -1,5 +1,3 @@
-import React, { Suspense } from "react";
-
 export const metadata = {
   title: "Login",
 };

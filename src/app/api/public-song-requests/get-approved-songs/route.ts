@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(request: Request) {
+export async function GET() {
   // Always return only APPROVED requests
   const data = await prisma.songRequest.findMany({
     where: { status: "APPROVED" },
