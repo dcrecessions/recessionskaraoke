@@ -3,16 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
-import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { toast } = useToast();
-  const t = useTranslations("VerifyEmail");
   const emailVerifyToken = searchParams.get("token");
   const [isVerified, setIsVerified] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -23,12 +20,10 @@ export default function VerifyEmailPage() {
       const response = await axios.post("/api/users/verify-email", {
         emailVerifyToken,
       });
-      toast({ title: "Success", description: response.data.message });
+      toast.success("Success", { description: response.data.message });
       setIsVerified(true);
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
+      toast.error("Error", {
         description: error.response?.data?.error || "Failed to verify email.",
       });
     } finally {
@@ -41,15 +36,15 @@ export default function VerifyEmailPage() {
       <Card className="w-[400px]">
         <CardHeader>
           <CardTitle>
-            {isVerified ? t("title.verified") : t("title.unverified")}
+            {isVerified ? "Email Verified" : "Verify Email"}
           </CardTitle>
         </CardHeader>
         <CardContent>
           {isVerified ? (
-            <p>{t("messages.success")}</p>
+            <p>Email verified successfully!</p>
           ) : (
             <Button onClick={verifyToken} disabled={loading}>
-              {loading ? t("messages.processing") : t("title.unverified")}
+              {loading ? "Loading..." : "Verify Email"}
             </Button>
           )}
         </CardContent>

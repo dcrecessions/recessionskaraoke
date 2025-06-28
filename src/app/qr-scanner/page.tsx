@@ -3,15 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "next-intl";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function QRScannerPage() {
   const router = useRouter();
-  const { toast } = useToast();
-  const t = useTranslations("QRScanner");
   const [scanning, setScanning] = useState(true);
   const [isClient, setIsClient] = useState(false); // Ensure client-side rendering
 
@@ -35,10 +32,8 @@ export default function QRScannerPage() {
     try {
       // Validate if the scanned result is a valid URL
       if (!isValidURL(result)) {
-        toast({
-          title: "Invalid QR Code",
-          description: t("messages.invalidURL"),
-          variant: "destructive",
+        toast.error("Invalid QR Code", {
+          description: "The QR code does not contain a valid URL.",
         });
         return;
       }
@@ -48,10 +43,8 @@ export default function QRScannerPage() {
       const qrID = url.searchParams.get("qrCodeId");
 
       if (!qrID) {
-        toast({
-          title: "Invalid QR Code",
-          description: t("messages.invalidData"),
-          variant: "destructive",
+        toast.error("Invalid QR Code", {
+          description: "The QR code does not contain valid registration data.",
         });
         return;
       }
@@ -60,21 +53,21 @@ export default function QRScannerPage() {
       router.push(`/signup?qrCodeId=${qrID}`);
     } catch (error) {
       console.error("Error processing QR code:", error);
-      toast({
-        title: "Error",
-        description: t("messages.processingError"),
-        variant: "destructive",
+      toast.error("Error", {
+        description: "Failed to process QR code.",
       });
     }
   };
 
   return (
     <div className="container mx-auto py-8 bg-[#EFEEE7] h-screen">
-      <h1 className="text-3xl font-bold text-center mb-8">{t("title")}</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">
+        Scan QR Code to Register
+      </h1>
 
       <Card className="max-w-lg mx-auto">
         <CardHeader>
-          <CardTitle>{t("scannerTitle")}</CardTitle>
+          <CardTitle>Scanner</CardTitle>
         </CardHeader>
         <CardContent>
           {isClient ? (
