@@ -7,7 +7,7 @@ import { Role } from "@prisma/client";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (request.method !== "PATCH") {
     return NextResponse.json(
@@ -69,7 +69,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   if (request.method !== "DELETE") {
     return NextResponse.json(
