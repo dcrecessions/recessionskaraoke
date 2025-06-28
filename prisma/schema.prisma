@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  name           String?
+  email          String?   @unique
+  isEmailVerified Boolean @default(false)
+  emailVerifiedAt DateTime?
+  password       String?  // Optional if you're using OAuth providers
+  profileImageUrl String? // Cloudinary profile image link
+  role           Role     @default(USER)
+  emailVerificationTokens EmailVerificationToken[] // Reverse relation for EmailVerificationToken
+  createdAt      DateTime @default(now())
+  actionedRequests SongRequest[] @relation("RequestStatusByUser")
+}
+
+model SongRequest {
+  id            String        @id @default(cuid())
+  name          String
+  email         String
+  song          String
+  createdAt     DateTime      @default(now())
+  status        RequestStatus @default(PENDING)
+  statusById    String?       // Admin user ID who changed status
+  statusBy      User?         @relation("RequestStatusByUser", fields: [statusById], references: [id])
+  statusChanged DateTime?     // Timestamp of last status change
+
+  @@index([status, createdAt])
+}
+
+model EmailVerificationToken {
+  id         String   @id @default(cuid())
+  userId     String   // Links to the user
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  emailVerifyToken      String   // Unique token for verification
+  expires    DateTime // Expiration time for the token
+  createdAt  DateTime @default(now())
+}
+
+model SpotifyToken {
+  id        Int      @id @default(autoincrement())
+  token     String
+  expiresAt DateTime
+  updatedAt DateTime @updatedAt
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  SKIPPED
+  REMOVED
+  PLAYED
+}
+
+enum Role {
+  USER
+  ADMIN
+}
