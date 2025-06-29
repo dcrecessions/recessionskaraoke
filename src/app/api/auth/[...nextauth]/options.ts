@@ -71,7 +71,7 @@ export const authOptions: NextAuthOptions = {
         // Add custom fields to the token
         token.id = user.id?.toString();
         token.role = user.role;
-        token.isemailVerified = user.isemailVerified;
+        token.isEmailVerified = user.isEmailVerified;
         token.email = user.email;
         token.isTemporary = user.isTemporary; // Add isTemporary field
       }
@@ -82,7 +82,7 @@ export const authOptions: NextAuthOptions = {
       if (token) {
         session.user.id = token.id;
         session.user.role = token.role;
-        session.user.isemailVerified = token.isemailVerified;
+        session.user.isEmailVerified = token.isEmailVerified;
         session.user.email = token.email;
         session.user.isTemporary = token.isTemporary; // Add isTemporary field
       }

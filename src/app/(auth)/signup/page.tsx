@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useSession, signIn } from "next-auth/react";
 import { useCallback } from "react";
@@ -21,9 +21,6 @@ import { toast } from "sonner";
 export default function SignupPage() {
   const router = useRouter();
 
-  const searchParams = useSearchParams(); // Extract query params
-  const qrCodeId = searchParams.get("qrCodeId"); // Get `qrCodeId` if present
-
   const { data: session, status } = useSession(); // Fetch session data
 
   const [user, setUser] = React.useState({
@@ -34,86 +31,18 @@ export default function SignupPage() {
   const [buttonDisabled, setButtonDisabled] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const linkQrToAlreadyLoggedInUser = useCallback(async () => {
-    console.log("inside linkQrToAlreadyLoggedInUser");
-    try {
-      setLoading(true);
-
-      const userId = session?.user?.id;
-      if (!userId) {
-        toast.error("Error", {
-          description: "User is not authenticated, unable to link QR code.",
-        });
-      }
-      const response = await axios.post(
-        "/api/savior/link-qr-already-loggedin-user",
-        {
-          qrCodeId,
-          userId,
-        }
-      );
-      console.log("QR code linked", response.data);
-      // console.log("redirect to victim information commented out");
-      router.push(`/victim-information?qrCodeId=${qrCodeId}&notifyBoth=true`);
-    } catch (error: any) {
-      console.error("Error linking QR code:", error.message);
-      toast.error("Error", {
-        description: error.message,
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [qrCodeId, session?.user?.id, router, toast]);
-
-  useEffect(() => {
-    // console.log("SignupPage useEffect has been called");
-    // console.log("status:", status);
-    // console.log("user id in session", session?.user?.id);
-    // Check if user is already logged in
-    if (status === "authenticated" && qrCodeId && session?.user?.id) {
-      // Redirect to victim information page if `qrCodeId` is present
-      linkQrToAlreadyLoggedInUser();
-    }
-  }, [status, qrCodeId, session?.user?.id, linkQrToAlreadyLoggedInUser]);
-
   const onSignup = async () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", {
         ...user,
-        qrCodeId, // Include `qrCodeId` in the request
       });
       console.log("Signup success", response.data);
       toast.success("Success", {
         description: "Signup successful!",
       });
-      if (qrCodeId) {
-        // If `qrCodeId` is present, log in the user programmatically
-        const loginResponse = await signIn("credentials", {
-          redirect: false,
-          email: user.email,
-          password: user.password,
-        });
-
-        if (loginResponse?.error) {
-          toast.error("Login Failed", {
-            description:
-              "Unable to log in after registration. Please try again.",
-          });
-          return;
-        }
-
-        console.log("Login success", loginResponse);
-        toast.success("Logged in", {
-          description: "You are now logged in.",
-        });
-
-        // Redirect to the victim information page
-        router.push(`/victim-information?qrCodeId=${qrCodeId}&notifyBoth=true`);
-      } else {
-        // Normal flow: redirect to login page
-        router.push("/login");
-      }
+      // Normal flow: redirect to login page
+      router.push("/login");
     } catch (error: any) {
       console.log("Signup failed", error.message);
       toast.error("Error", {
@@ -229,11 +158,7 @@ export default function SignupPage() {
                         asChild
                         className="text-blue-500 hover:underline mt-5"
                       >
-                        <Link
-                          href={
-                            qrCodeId ? `/login?qrCodeId=${qrCodeId}` : "/login"
-                          }
-                        >
+                        <Link href="/login">
                           Already have an account? Login here
                         </Link>
                       </Button>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React, { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn, useSession, getSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,7 +21,6 @@ type Message = { type: "error" | "success"; text: string };
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [user, setUser] = React.useState({ email: "", password: "" });
   const [buttonDisabled, setButtonDisabled] = React.useState(true);

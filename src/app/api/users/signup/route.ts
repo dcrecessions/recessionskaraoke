@@ -53,16 +53,6 @@ export async function POST(request: NextRequest) {
           email,
           name,
           password: hashedPassword,
-          isTemporary: true, // Mark as temporary
-          tempStartTime: new Date(), // Set tempStartTime to current time
-        },
-      });
-
-      // Link the user to the QR code
-      await prisma.saviorQRCode.create({
-        data: {
-          saviorId: newUser.id,
-          qrCodeId,
         },
       });
     } else {

@@ -3,7 +3,7 @@ import "next-auth";
 declare module "next-auth" {
   interface User {
     id?: string;
-    isemailVerified?: boolean;
+    isEmailVerified?: boolean;
     email?: string;
     isTemporary?: boolean;
     role?: "USER" | "ADMIN";
@@ -12,7 +12,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       id?: string;
-      isemailVerified?: boolean;
+      isEmailVerified?: boolean;
       email?: string;
       isTemporary?: boolean;
       role?: "USER" | "ADMIN";
@@ -23,7 +23,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id?: string;
-    isemailVerified?: boolean;
+    isEmailVerified?: boolean;
     email?: string;
     role?: "USER" | "ADMIN";
   }
