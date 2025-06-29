@@ -130,13 +130,15 @@ export default function SongRequestFormPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#d5bc81]">
       <header className="flex items-center justify-between p-4 bg-black shadow">
-        <img
-          src="/recessionsDCLogo.png"
-          alt="Recessions DC Logo"
-          className="h-10"
-        />
+        <Link href="/">
+          <img
+            src="/recessionsDCLogo.png"
+            alt="Recessions DC Logo"
+            className="h-10"
+          />
+        </Link>
         <Link href="/login">
           <Button variant="ghost" className="text-amber-100 border">
             Admin Login

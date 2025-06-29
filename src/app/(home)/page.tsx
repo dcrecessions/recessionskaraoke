@@ -53,14 +53,16 @@ export default function GuestQueuePage() {
   }, [fetchQueue]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#d5bc81]">
       {/* Header */}
       <header className="flex items-center justify-between p-4 bg-black shadow">
-        <img
-          src="/recessionsDCLogo.png"
-          alt="Recessions DC Logo"
-          className="h-10 w-auto"
-        />
+        <Link href="/">
+          <img
+            src="/recessionsDCLogo.png"
+            alt="Recessions DC Logo"
+            className="h-10 w-auto"
+          />
+        </Link>
         <Link href="/login">
           <Button
             variant="ghost"
