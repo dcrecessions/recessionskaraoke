@@ -75,13 +75,17 @@ export default function SignupPage() {
               {/* <!-- Start Logo --> */}
               <div className="text-center mx-auto">
                 <Link href="/">
-                  <div className="flex justify-center mb-4 bg-white rounded-lg">
-                    <Avatar style={{ height: "5rem", width: "5rem" }}>
-                      <AvatarImage
-                        src="../../scanneSauverLogo.png"
-                        alt="Logo"
-                      />
-                      <AvatarFallback>X</AvatarFallback>
+                  <div className="flex justify-center mb-4 bg-transparent">
+                    <Avatar
+                      style={{
+                        height: "4rem",
+                        width: "12rem",
+                        padding: "0.3rem",
+                        borderRadius: "2rem",
+                      }}
+                    >
+                      <AvatarImage src="/recessionsDCLogo.png" alt="Logo" />
+                      <AvatarFallback>RECESSIONS</AvatarFallback>
                     </Avatar>
                   </div>
                 </Link>

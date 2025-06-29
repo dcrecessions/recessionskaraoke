@@ -114,25 +114,52 @@ export default function ControlPanelPage() {
 
   return (
     <div className="min-h-screen p-8 space-y-6">
-      {/* Stats & Refresh */}
-      <div className="flex items-center justify-between">
-        <div className="space-x-4">
-          <span>
-            Total in Queue: <strong>{approved.length}</strong>
-          </span>
-          <span>
-            Total Pending: <strong>{pending.length}</strong>
-          </span>
-          <span>
-            Total Played: <strong>{played.length}</strong>
-          </span>
-          <span>
-            Discarded: <strong>{discarded.length}</strong>
-          </span>
-        </div>
+      {/* refresh button */}
+      <div className="flex-1 flex justify-end items-center">
         <Button onClick={fetchLists} disabled={loading}>
           {loading ? "Refreshing…" : "Refresh"}
         </Button>
+      </div>
+      {/* ─── STATS CARDS + REFRESH ───────────────────────────── */}
+      <div className="flex items-start justify-between">
+        {/* grid of 4 small cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 flex-1">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm">In Queue</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">{approved.length}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm">Pending</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">{pending.length}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm">Played</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">{played.length}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-sm">Discarded</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold">{discarded.length}</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Approved Queue */}

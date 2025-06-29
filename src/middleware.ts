@@ -11,22 +11,22 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request }).catch(() => null);
 
   // Allow access to the scanner route for everyone (no redirects)
-  if (url.pathname.startsWith("/qr-scanner")) {
-    return NextResponse.next();
-  }
+  // if (url.pathname.startsWith("/qr-scanner")) {
+  //   return NextResponse.next();
+  // }
 
   // Redirect temporary users away from all pages except allowed ones
-  if (
-    token &&
-    token.isTemporary &&
-    !(
-      url.pathname.startsWith("/my-scanned-qrs") ||
-      url.pathname.startsWith("/victim-information") ||
-      url.pathname.startsWith("/qr-scanner")
-    )
-  ) {
-    return NextResponse.redirect(new URL("/my-scanned-qrs", request.url));
-  }
+  // if (
+  //   token &&
+  //   token.isTemporary &&
+  //   !(
+  //     url.pathname.startsWith("/my-scanned-qrs") ||
+  //     url.pathname.startsWith("/victim-information") ||
+  //     url.pathname.startsWith("/qr-scanner")
+  //   )
+  // ) {
+  //   return NextResponse.redirect(new URL("/my-scanned-qrs", request.url));
+  // }
 
   // Redirect logged-in users away from login or signup pages
   if (
@@ -44,9 +44,10 @@ export async function middleware(request: NextRequest) {
     (url.pathname.startsWith("/admin") ||
       url.pathname.startsWith("/dashboard") ||
       url.pathname.startsWith("/generateQR") ||
-      url.pathname.startsWith("/my-scanned-qrs") ||
-      url.pathname.startsWith("/savior-information") ||
-      url.pathname.startsWith("/victim-information"))
+      url.pathname.startsWith("/control-panel") ||
+      url.pathname.startsWith("/view-all-songs") ||
+      url.pathname.startsWith("/user-management") ||
+      url.pathname.startsWith("/qr-management"))
   ) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -60,6 +61,6 @@ export const config = {
     "/qr-scanner",
     "/login",
     "/signup",
-    "/(admin|dashboard|generateQR|my-scanned-qrs|savior-information|victim-information)(/:path*)?",
+    "/(admin|dashboard|generateQR|control-panel|view-all-songs|user-management|qr-management)(/:path*)?",
   ],
 };
