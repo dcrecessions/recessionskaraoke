@@ -133,7 +133,7 @@ export default function SongRequestFormPage() {
     <div className="min-h-screen bg-gray-50">
       <header className="flex items-center justify-between p-4 bg-black shadow">
         <img
-          src="/recessionsdclogo.png"
+          src="/recessionsDCLogo.png"
           alt="Recessions DC Logo"
           className="h-10"
         />

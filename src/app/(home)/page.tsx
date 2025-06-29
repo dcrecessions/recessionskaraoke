@@ -57,7 +57,7 @@ export default function GuestQueuePage() {
       {/* Header */}
       <header className="flex items-center justify-between p-4 bg-black shadow">
         <img
-          src="/recessionsdclogo.png"
+          src="/recessionsDCLogo.png"
           alt="Recessions DC Logo"
           className="h-10 w-auto"
         />
