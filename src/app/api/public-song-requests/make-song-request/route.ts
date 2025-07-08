@@ -17,7 +17,8 @@ export async function POST(request: Request) {
     const created = await prisma.songRequest.create({
       data: {
         name,
-        email: email || null,
+        email:
+          typeof email === "string" && email.trim() !== "" ? email.trim() : "",
         song,
         status: "PENDING",
         // statusById & statusChanged get set later by admin actions
