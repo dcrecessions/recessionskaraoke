@@ -45,11 +45,6 @@ export function AppSidebar() {
       url: "/generateQR",
       icon: QrCode,
     },
-    // {
-    //   title: "Scanner",
-    //   url: "/qr-scanner",
-    //   icon: Scan,
-    // },
   ];
 
   // Admin-specific items.

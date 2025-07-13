@@ -70,13 +70,16 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.984 0.003 247.858);
   --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(49.054% 0.14818 145.338);
-  --leftsidebar-primary: oklch(18% 0.03 260);
+  --sidebar-primary: oklch(100% 0 0);
+  --leftsidebar-primary: oklch(17.613% 0.06773 298.121);
   --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
   --sidebar-accent: oklch(0.968 0.007 247.896);
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --sidebar-ring: oklch(48.505% 0.0695 207.195);
+  --card-colour-1: oklch(48.756% 0.05118 194.453);
+  --card-colour-2: oklch(59.628% 0.08385 191.037);
+  --card-colour-3: #ffffff;
 }
 
 .dark {

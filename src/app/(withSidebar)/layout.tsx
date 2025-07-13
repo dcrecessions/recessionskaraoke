@@ -28,12 +28,12 @@ export default function DashboardLayout({
         <SidebarInset className="flex flex-col w-full">
           {/* Header with Breadcrumbs */}
           <header className="flex h-16 shrink-0 items-center bg-[var(--sidebar-primary)] justify-between transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4 text-white">
+            <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="mr-2 h-4" />
               <Breadcrumb>
                 <BreadcrumbList>
-                  <BreadcrumbItem className="hidden md:block text-white">
+                  <BreadcrumbItem className="hidden md:block text-black text-lg font-semibold">
                     <BreadcrumbLink href="/dashboard">
                       Recessions DC
                     </BreadcrumbLink>
@@ -49,7 +49,7 @@ export default function DashboardLayout({
           </header>
 
           {/* Main Content Area */}
-          <div className="flex-1 p-4 bg-[#d5bc81]">
+          <div className="flex-1 p-4 bg-[#EFEFEF]">
             <Suspense fallback={<div>Loading...</div>}>
               <main>{children}</main>
               <Toaster richColors />

@@ -63,7 +63,7 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card>
+        <Card className="bg-[var(--card-colour-1)] text-white">
           <CardHeader>
             <CardTitle>Total in Queue</CardTitle>
           </CardHeader>
@@ -72,7 +72,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-[var(--card-colour-2)]">
           <CardHeader>
             <CardTitle>Pending Requests</CardTitle>
           </CardHeader>
@@ -81,7 +81,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-[var(--card-colour-1)] text-white">
           <CardHeader>
             <CardTitle>Songs Played</CardTitle>
           </CardHeader>
@@ -90,26 +90,13 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-[var(--card-colour-2)]">
           <CardHeader>
             <CardTitle>Discarded Songs</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-4xl font-bold">{stats.discardedCount}</p>
           </CardContent>
-        </Card>
-
-        <Card className="wid-full col-span-1 sm:col-span-2 lg:col-span-4">
-          <CardHeader>
-            <CardTitle className="text-4xl font-bold">
-              Please send your Whatsapp number and email address to
-              sumedhtirodkar16@gmail.com
-              <br />
-              <br />
-              <br /> Do not mention about this on Fívéř.
-            </CardTitle>
-          </CardHeader>
-          <CardContent></CardContent>
         </Card>
       </div>
     </div>

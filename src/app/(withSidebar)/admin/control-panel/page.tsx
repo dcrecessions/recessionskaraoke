@@ -124,7 +124,7 @@ export default function ControlPanelPage() {
       <div className="flex items-start justify-between">
         {/* grid of 4 small cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 flex-1">
-          <Card>
+          <Card className="bg-[var(--card-colour-1)] text-white">
             <CardHeader>
               <CardTitle className="text-sm">In Queue</CardTitle>
             </CardHeader>
@@ -133,7 +133,7 @@ export default function ControlPanelPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[var(--card-colour-2)]">
             <CardHeader>
               <CardTitle className="text-sm">Pending</CardTitle>
             </CardHeader>
@@ -142,7 +142,7 @@ export default function ControlPanelPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[var(--card-colour-1)] text-white">
             <CardHeader>
               <CardTitle className="text-sm">Played</CardTitle>
             </CardHeader>
@@ -151,7 +151,7 @@ export default function ControlPanelPage() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="bg-[var(--card-colour-2)]">
             <CardHeader>
               <CardTitle className="text-sm">Discarded</CardTitle>
             </CardHeader>
@@ -163,7 +163,7 @@ export default function ControlPanelPage() {
       </div>
 
       {/* Approved Queue */}
-      <Card>
+      <Card className="bg-[var(--card-colour-3)]">
         <CardHeader>
           <CardTitle>Current Queue</CardTitle>
         </CardHeader>
@@ -175,6 +175,7 @@ export default function ControlPanelPage() {
               <TableCaption>Approved requests waiting in queue</TableCaption>
               <TableHeader>
                 <TableRow>
+                  <TableHead>Queue #</TableHead>
                   <TableHead>Time</TableHead>
                   <TableHead>Song</TableHead>
                   <TableHead>Requested By</TableHead>
@@ -182,8 +183,9 @@ export default function ControlPanelPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {approved.map((r) => (
+                {approved.map((r, idx) => (
                   <TableRow key={r.id}>
+                    <TableCell>{idx + 1}</TableCell>
                     <TableCell>
                       {new Date(r.createdAt).toLocaleTimeString()}
                     </TableCell>

@@ -110,12 +110,31 @@ export default function SongRequestFormPage() {
           return;
         }
 
-        await axios.post("/api/public-song-requests/make-song-request", {
+        // 1) make the request
+        const makeRes = await axios.post<{
+          data: { id: string; song: string };
+        }>("/api/public-song-requests/make-song-request", {
           name,
           email,
           song,
         });
-        setSuccess("Your request has been received!");
+
+        // 2) re-fetch the combined queue
+        const queueRes = await axios.get<{
+          data: { id: string; song: string }[];
+        }>("/api/public-song-requests/get-pending-and-approved-songs");
+
+        // 3) compute your position
+        const idx = queueRes.data.data.findIndex(
+          (r) => r.id === makeRes.data.data.id
+        );
+        const position = idx >= 0 ? idx + 1 : queueRes.data.data.length;
+
+        setSuccess(
+          `Your request has been received! Your song is number ${position} in the queue.`
+        );
+
+        // clear form
         setSong("");
         setQuery("");
         setName("");
@@ -130,7 +149,7 @@ export default function SongRequestFormPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#d5bc81]">
+    <div className="min-h-screen bg-[#e2e2e2]">
       <header className="flex items-center justify-between p-4 bg-black shadow">
         <Link href="/">
           <img
@@ -147,7 +166,7 @@ export default function SongRequestFormPage() {
       </header>
 
       <main className="p-8 flex justify-center">
-        <Card className="w-full max-w-md">
+        <Card className="w-full max-w-md shadow-2xl bg-[#dff8eb]">
           <CardHeader>
             <CardTitle>Request a Song</CardTitle>
           </CardHeader>
@@ -213,7 +232,7 @@ export default function SongRequestFormPage() {
               type="submit"
               onClick={(e) => handleSubmit(e)}
               disabled={loading}
-              className="px-8 py-3 text-lg rounded-lg"
+              className="px-5 text-xl py-5 rounded-lg bg-[#74776b] "
             >
               {loading ? "Submitting..." : "Submit Request"}
             </Button>
