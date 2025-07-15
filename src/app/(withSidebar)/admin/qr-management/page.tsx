@@ -123,8 +123,8 @@ export default function QRListPage() {
     doc.addImage(tplDataUrl, "PNG", 0, 0, pw, ph);
 
     // 3) place the QR in bottom‐right
-    const qrSize = 325; // adjust as you like
-    const margin = 10;
+    const qrSize = 400; // adjust as you like
+    const margin = -25;
     const x = pw - qrSize - margin;
     const y = ph - qrSize - margin;
     doc.addImage(q.qrCodeUrl, "PNG", x, y, qrSize, qrSize);

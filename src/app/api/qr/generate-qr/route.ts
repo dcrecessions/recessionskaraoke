@@ -55,7 +55,14 @@ export async function POST(request: NextRequest) {
     .toLowerCase();
 
   // generate PNG buffer
-  const buffer = await QRCode.toBuffer(qrCodeData, { type: "png", width: 500 });
+  const buffer = await QRCode.toBuffer(qrCodeData, {
+    type: "png",
+    width: 500,
+    color: {
+      dark: "#000000",
+      light: "#0000",
+    },
+  });
 
   // convert to data URI
   const dataUri = "data:image/png;base64," + buffer.toString("base64");
