@@ -53,7 +53,11 @@ export default function GuestQueuePage() {
   }, [fetchQueue]);
 
   return (
-    <div className="min-h-screen bg-[#e2e2e2]">
+    <div
+      className="min-h-screen flex flex-col relative
+       bg-[url('/assets/homepage/home_bg.jpeg')]
+       bg-cover bg-center"
+    >
       {/* Header */}
       <header className="flex items-center justify-between p-4 bg-black shadow">
         <Link href="/">
@@ -74,8 +78,8 @@ export default function GuestQueuePage() {
       </header>
 
       {/* Main Content */}
-      <main className="p-8 flex justify-center">
-        <Card className="w-full max-w-4xl bg-[#dff8eb] shadow-lg">
+      <main className="flex-1 flex items-center justify-center p-8">
+        <Card className="w-full max-w-4xl bg-[#ffffff] shadow-2xl z-10">
           <CardHeader>
             <CardTitle>Current Karaoke Queue</CardTitle>
           </CardHeader>
@@ -108,7 +112,7 @@ export default function GuestQueuePage() {
           </CardContent>
           <CardFooter className="flex justify-center mt-5">
             <Link href="/new-song-request">
-              <Button className="bg-[#74776b] text-xl py-5 px-5">
+              <Button className="bg-[#202020] text-xl py-5 px-5">
                 Request a Song
               </Button>
             </Link>

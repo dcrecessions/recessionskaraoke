@@ -149,7 +149,11 @@ export default function SongRequestFormPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#e2e2e2]">
+    <div
+      className="min-h-screen flex flex-col
+       bg-[url('/assets/homepage/home_bg.jpeg')]
+       bg-cover bg-center"
+    >
       <header className="flex items-center justify-between p-4 bg-black shadow">
         <Link href="/">
           <img
@@ -165,8 +169,8 @@ export default function SongRequestFormPage() {
         </Link>
       </header>
 
-      <main className="p-8 flex justify-center">
-        <Card className="w-full max-w-md shadow-2xl bg-[#dff8eb]">
+      <main className="flex-1 flex items-center justify-center p-8">
+        <Card className="w-full max-w-md shadow-2xl bg-[#ffffff]">
           <CardHeader>
             <CardTitle>Request a Song</CardTitle>
           </CardHeader>
@@ -232,7 +236,7 @@ export default function SongRequestFormPage() {
               type="submit"
               onClick={(e) => handleSubmit(e)}
               disabled={loading}
-              className="px-5 text-xl py-5 rounded-lg bg-[#74776b] "
+              className="px-5 text-xl py-5 rounded-lg bg-[#202020] "
             >
               {loading ? "Submitting..." : "Submit Request"}
             </Button>

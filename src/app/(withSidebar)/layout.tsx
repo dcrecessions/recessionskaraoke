@@ -12,7 +12,7 @@ import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
-  title: "Dashboard",
+  title: "Admin Panel - Recessions DC",
 };
 
 export default function DashboardLayout({

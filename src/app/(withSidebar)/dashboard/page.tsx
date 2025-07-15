@@ -57,7 +57,11 @@ export default function AdminDashboardPage() {
     <div className="min-h-screen p-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-semibold">Admin Dashboard</h1>
-        <Button onClick={fetchStats} disabled={loading}>
+        <Button
+          onClick={fetchStats}
+          className="bg-[var(--card-colour-5)] text-white"
+          disabled={loading}
+        >
           {loading ? "Refreshing…" : "Refresh"}
         </Button>
       </div>
@@ -72,7 +76,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[var(--card-colour-2)]">
+        <Card className="bg-[var(--card-colour-2)] text-white">
           <CardHeader>
             <CardTitle>Pending Requests</CardTitle>
           </CardHeader>
@@ -81,7 +85,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[var(--card-colour-1)] text-white">
+        <Card className="bg-[var(--card-colour-3)] text-white">
           <CardHeader>
             <CardTitle>Songs Played</CardTitle>
           </CardHeader>
@@ -90,7 +94,7 @@ export default function AdminDashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[var(--card-colour-2)]">
+        <Card className="bg-[var(--card-colour-4)] text-white">
           <CardHeader>
             <CardTitle>Discarded Songs</CardTitle>
           </CardHeader>

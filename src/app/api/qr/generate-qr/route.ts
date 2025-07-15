@@ -4,8 +4,15 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import prisma from "@/lib/prisma";
 import QRCode from "qrcode";
-import fs from "fs";
-import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+
+// Use the CLOUDINARY_URL env var or individual vars:
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 export const dynamic = "force-dynamic"; // disable caching
 
@@ -41,19 +48,37 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // create a safe filename
+  // generate a safe public_id
   const safe = qrCodeData
     .slice(0, 20)
     .replace(/[^a-z0-9]/gi, "_")
     .toLowerCase();
-  const filename = `${Date.now()}-${safe}.png`;
-  const publicDir = path.join(process.cwd(), "public", "qrCodes");
-  await fs.promises.mkdir(publicDir, { recursive: true });
-  const filePath = path.join(publicDir, filename);
 
   // generate PNG buffer
-  const buffer = await QRCode.toBuffer(qrCodeData, { type: "png", width: 300 });
-  await fs.promises.writeFile(filePath, buffer);
+  const buffer = await QRCode.toBuffer(qrCodeData, { type: "png", width: 500 });
+
+  // convert to data URI
+  const dataUri = "data:image/png;base64," + buffer.toString("base64");
+
+  // upload to Cloudinary
+  let uploadResult;
+  try {
+    uploadResult = await cloudinary.uploader.upload(dataUri, {
+      folder: "qrCodes",
+      public_id: safe,
+      overwrite: true,
+      resource_type: "image",
+    });
+  } catch (err: any) {
+    console.error("Cloudinary upload error:", err);
+    return NextResponse.json(
+      { error: "Failed to upload to Cloudinary" },
+      { status: 500 }
+    );
+  }
+
+  // record the hosted URL
+  const hostedUrl = uploadResult.secure_url;
 
   // create or update in DB
   let record;
@@ -61,7 +86,7 @@ export async function POST(request: NextRequest) {
     record = await prisma.qRCode.update({
       where: { id: qrId },
       data: {
-        qrCodeUrl: `/qrCodes/${filename}`,
+        qrCodeUrl: hostedUrl,
         qrCodeData,
         status: reqStatus,
       },
@@ -72,7 +97,7 @@ export async function POST(request: NextRequest) {
         userId: session.user.id,
         qrCodeData,
         status: reqStatus,
-        qrCodeUrl: `/qrCodes/${filename}`,
+        qrCodeUrl: hostedUrl,
       },
     });
   }

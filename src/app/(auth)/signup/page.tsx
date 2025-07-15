@@ -175,7 +175,7 @@ export default function SignupPage() {
               {/* <!-- Start Footer --> */}
               <div className="text-center">
                 <p className="text-gray-400">
-                  © {new Date().getFullYear()} ScannePourSauver. All rights
+                  © {new Date().getFullYear()} Recessions DC. All rights
                   reserved.
                 </p>
               </div>

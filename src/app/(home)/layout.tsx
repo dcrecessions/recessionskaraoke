@@ -1,7 +1,7 @@
 import React from "react";
 
 export const metadata = {
-  title: "ScanneSauver - Home",
+  title: "Home - Recessions DC",
 };
 
 export default function HomeLayout({

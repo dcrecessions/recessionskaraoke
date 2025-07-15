@@ -2,8 +2,15 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import prisma from "@/lib/prisma";
-import fs from "fs/promises";
-import path from "path";
+import { v2 as cloudinary } from "cloudinary";
+
+// configure Cloudinary from env
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
+});
 
 export async function DELETE(request: Request) {
   const session = await getServerSession(authOptions);
@@ -33,10 +40,24 @@ export async function DELETE(request: Request) {
     );
   }
 
-  // delete file
-  const rel = record.qrCodeUrl.replace(/^\//, "");
-  const filePath = path.join(process.cwd(), "public", rel);
-  await fs.unlink(filePath).catch(() => {});
+  // parse out the Cloudinary public_id
+  try {
+    const urlObj = new URL(record.qrCodeUrl);
+    const segments = urlObj.pathname.split("/");
+    // find the "qrCodes" segment
+    const idx = segments.findIndex((s) => s === "qrCodes");
+    if (idx !== -1 && segments.length > idx + 1) {
+      const filename = segments[idx + 1]; // e.g. "safe.png"
+      const publicId = `qrCodes/${filename.replace(/\.[^.]+$/, "")}`;
+      // delete from Cloudinary
+      await cloudinary.uploader.destroy(publicId, {
+        resource_type: "image",
+      });
+    }
+  } catch (err) {
+    console.error("Cloudinary deletion error:", err);
+    // we’ll still proceed to delete the DB row
+  }
 
   // delete DB row
   await prisma.qRCode.delete({ where: { id: qrId } });

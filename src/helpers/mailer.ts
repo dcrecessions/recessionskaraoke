@@ -36,7 +36,7 @@ export const sendVerificationEmail = async (
       to: email,
       subject: "Verify Your Email Address",
       html: `
-        <h1>Welcome to Scanne Pour Sauver!</h1>
+        <h1>Welcome to Recessions DC!</h1>
         <p>Please click the link below to verify your email address:</p>
         <a href="${verificationUrl}" style="padding: 10px 20px; color: white; background-color: blue; text-decoration: none; border-radius: 5px;">Verify Email</a>
         <p>If you did not sign up, you can safely ignore this email.</p>

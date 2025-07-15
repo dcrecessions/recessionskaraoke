@@ -116,7 +116,11 @@ export default function ControlPanelPage() {
     <div className="min-h-screen p-8 space-y-6">
       {/* refresh button */}
       <div className="flex-1 flex justify-end items-center">
-        <Button onClick={fetchLists} disabled={loading}>
+        <Button
+          onClick={fetchLists}
+          className="bg-[var(--card-colour-5)] text-white"
+          disabled={loading}
+        >
           {loading ? "Refreshing…" : "Refresh"}
         </Button>
       </div>
@@ -133,7 +137,7 @@ export default function ControlPanelPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-[var(--card-colour-2)]">
+          <Card className="bg-[var(--card-colour-2)] text-white">
             <CardHeader>
               <CardTitle className="text-sm">Pending</CardTitle>
             </CardHeader>
@@ -142,7 +146,7 @@ export default function ControlPanelPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-[var(--card-colour-1)] text-white">
+          <Card className="bg-[var(--card-colour-3)] text-white">
             <CardHeader>
               <CardTitle className="text-sm">Played</CardTitle>
             </CardHeader>
@@ -151,7 +155,7 @@ export default function ControlPanelPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-[var(--card-colour-2)]">
+          <Card className="bg-[var(--card-colour-4)] text-white">
             <CardHeader>
               <CardTitle className="text-sm">Discarded</CardTitle>
             </CardHeader>
@@ -163,7 +167,7 @@ export default function ControlPanelPage() {
       </div>
 
       {/* Approved Queue */}
-      <Card className="bg-[var(--card-colour-3)]">
+      <Card className="bg-[var(--card-colour-6)]">
         <CardHeader>
           <CardTitle>Current Queue</CardTitle>
         </CardHeader>
@@ -194,16 +198,15 @@ export default function ControlPanelPage() {
                     <TableCell className="space-x-2">
                       <Button
                         size="sm"
-                        variant="outline"
+                        className="bg-[var(--card-colour-3)] text-white"
                         onClick={() => handleAction(r.id, "PLAYED")}
                         disabled={loading}
-                        className="bg-blue-500 text-white"
                       >
                         Done Playing
                       </Button>
                       <Button
                         size="sm"
-                        variant="destructive"
+                        className="bg-[var(--card-colour-4)] text-white"
                         onClick={() => handleAction(r.id, "REMOVED")}
                         disabled={loading}
                       >
@@ -248,6 +251,7 @@ export default function ControlPanelPage() {
                     <TableCell className="space-x-2">
                       <Button
                         size="sm"
+                        className="bg-[var(--card-colour-1)] text-white"
                         onClick={() => handleAction(r.id, "APPROVED")}
                         disabled={loading}
                       >
@@ -255,7 +259,7 @@ export default function ControlPanelPage() {
                       </Button>
                       <Button
                         size="sm"
-                        variant="destructive"
+                        className="bg-[var(--card-colour-4)] text-white"
                         onClick={() => handleAction(r.id, "SKIPPED")}
                         disabled={loading}
                       >
@@ -299,18 +303,19 @@ export default function ControlPanelPage() {
                     <TableCell className="space-x-2">
                       <Button
                         size="sm"
+                        className="bg-[var(--card-colour-1)] text-white"
                         onClick={() => handleAction(r.id, "APPROVED")}
                         disabled={loading}
                       >
-                        Re-Queue
+                        Add to Queue
                       </Button>
                       <Button
                         size="sm"
-                        variant="outline"
+                        className="bg-[var(--card-colour-2)] text-white"
                         onClick={() => handleAction(r.id, "PENDING")}
                         disabled={loading}
                       >
-                        Re-Request
+                        Add to Pending
                       </Button>
                     </TableCell>
                   </TableRow>
@@ -351,6 +356,7 @@ export default function ControlPanelPage() {
                     <TableCell className="space-x-2">
                       <Button
                         size="sm"
+                        className="bg-[var(--card-colour-1)] text-white"
                         onClick={() => handleAction(r.id, "APPROVED")}
                         disabled={loading}
                       >
@@ -358,7 +364,7 @@ export default function ControlPanelPage() {
                       </Button>
                       <Button
                         size="sm"
-                        variant="outline"
+                        className="bg-[var(--card-colour-2)] text-white"
                         onClick={() => handleAction(r.id, "PENDING")}
                         disabled={loading}
                       >

@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 
 export const metadata = {
-  title: "Verify Email",
+  title: "Verify Email - Recessions DC",
 };
 
 export default function VerifyEmailLayout({

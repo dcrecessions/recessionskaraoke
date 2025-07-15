@@ -95,15 +95,43 @@ export default function QRListPage() {
   };
 
   // print to PDF
-  const handlePrint = (q: QRCodeItem) => {
-    const doc = new jsPDF();
-    doc.setFontSize(24);
-    doc.text("DC Recessions Karaoke", 20, 30);
-    doc.setFontSize(16);
-    doc.text("Scan this QR code to request your song", 20, 50);
-    doc.addImage(q.qrCodeUrl, "PNG", 20, 60, 160, 160);
+  async function handlePrint(q: QRCodeItem) {
+    // 1) Create new PDF
+    const doc = new jsPDF({
+      unit: "pt",
+      format: "letter", // or "a4" if you prefer
+      orientation: "portrait",
+    });
+
+    // helper to convert a Blob to a base64 data URL
+    const blobToDataURL = (blob: Blob): Promise<string> =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsDataURL(blob);
+      });
+
+    // 2) fetch & add the background template
+    const tplResp = await fetch("/assets/print/qrCodeTemplate.jpeg");
+    const tplBlob = await tplResp.blob();
+    const tplDataUrl = await blobToDataURL(tplBlob);
+
+    // full‐page dimensions
+    const pw = doc.internal.pageSize.getWidth();
+    const ph = doc.internal.pageSize.getHeight();
+    doc.addImage(tplDataUrl, "PNG", 0, 0, pw, ph);
+
+    // 3) place the QR in bottom‐right
+    const qrSize = 325; // adjust as you like
+    const margin = 10;
+    const x = pw - qrSize - margin;
+    const y = ph - qrSize - margin;
+    doc.addImage(q.qrCodeUrl, "PNG", x, y, qrSize, qrSize);
+
+    // 4) finally save
     doc.save(`qrcode-${q.id}.pdf`);
-  };
+  }
 
   if (loading) return <p className="p-8 text-center">Loading…</p>;
 
