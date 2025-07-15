@@ -219,7 +219,7 @@ export default function SongRequestFormPage() {
                   placeholder="Your name"
                 />
               </div>
-              <div>
+              {/* <div>
                 <Label htmlFor="email">Email (optional)</Label>
                 <Input
                   id="email"
@@ -228,7 +228,7 @@ export default function SongRequestFormPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email"
                 />
-              </div>
+              </div> */}
             </form>
           </CardContent>
           <CardFooter className="flex justify-center">
