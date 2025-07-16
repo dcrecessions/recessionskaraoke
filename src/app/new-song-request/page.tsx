@@ -131,7 +131,7 @@ export default function SongRequestFormPage() {
         const position = idx >= 0 ? idx + 1 : queueRes.data.data.length;
 
         setSuccess(
-          `Your request has been received! Your song is number ${position} in the queue.`
+          `Your request has been submitted and is awaiting DJ approval. You’re #${position} in line to be reviewed.`
         );
 
         // clear form
